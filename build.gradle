@@ -1,9 +1,25 @@
-allprojects {
+buildscript {
+    ext {
+        springBootVersion = '2.1.0.RELEASE'
+    }
     repositories {
         mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath('io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE')
     }
 }
 
 subprojects {
     version = '1.0.0'
+}
+
+allprojects {
+
+}
+
+final String DEFAULT_PROFILE = 'dev'
+if (!project.hasProperty('profile') || !profile) {
+    ext.profile = DEFAULT_PROFILE
 }

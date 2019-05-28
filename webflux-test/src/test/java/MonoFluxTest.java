@@ -7,21 +7,18 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-import reactor.test.StepVerifier;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
+import java.util.stream.IntStream;
 
 @Slf4j
 public class MonoFluxTest {
-
     public static void main(String[] args) throws InterruptedException {
 //        Flux<Integer> flux = Flux.just(4,5,6);
 //        Mono<Integer> mono = Mono.just(4);
@@ -61,7 +58,7 @@ public class MonoFluxTest {
 //        publish.subscribe(System.out::println);
 //        publish.connect();
         Hooks.onOperatorDebug();
-         
+
         final List<String> basket1 = Arrays.asList(new String[]{"kiwi", "orange", "lemon", "orange", "lemon", "kiwi"});
         final List<String> basket2 = Arrays.asList(new String[]{"banana", "lemon", "lemon", "kiwi"});
         final List<String> basket3 = Arrays.asList(new String[]{"strawberry", "orange", "lemon", "grape", "strawberry"});
@@ -86,13 +83,17 @@ public class MonoFluxTest {
                         putAll(currentMap);
                     }})
                     .subscribeOn(Schedulers.parallel())
-                    /*.subscribeOn(Schedulers.parallel())*/;
-            return Flux.zip(distinctFruits, countOfFruits, (distinct, count) -> new FruitInfo(distinct, count));
-        }).subscribe();
+                    ;
 
+
+            return Flux.zip(distinctFruits, countOfFruits, (distinct, count) -> new FruitInfo(distinct, count));
+
+        }).subscribe(System.out::println, Throwable::printStackTrace, () -> log.info("basketFlux end"));
+        IntStream.iterate(0, n -> n+1)
+                .limit(10)
+                .close();
         TimeUnit.SECONDS.sleep(2);
     }
-
 }
 
 @Slf4j
@@ -112,7 +113,27 @@ class FluxTest{
                             log.info(counter.incrementAndGet() + " >>>>>>>>>> " + s);
                         },
                         err -> log.info("Error on Vehicle Stream: " + err),
-                        () -> log.info("Vehicle stream stoped!"));
+                        () -> log.info("Vehicle stream stopped!"));
+    }
+
+    Integer getAnyInteger() throws Exception {
+        throw new RuntimeException("An error as occured for no reason.");
+    }
+
+    // Now, comparison between the two methods
+    void compareMonoCreationMethods() {
+        Mono<Integer> fromCallable = Mono.fromCallable(this::getAnyInteger);
+
+        // result -> Mono.error(RuntimeException("An error as occured for no reason."))
+
+        Mono<Integer> defer = Mono.defer(() -> {
+            try {
+                Integer res = this.getAnyInteger();
+                return Mono.just(res);
+            } catch(Exception e) {
+                return Mono.error(e);
+            }
+        });
     }
 }
 
