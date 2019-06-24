@@ -18,8 +18,8 @@ dependencies {
 
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 
-    implementation 'org.projectlombok:lombok'
-//    compileOnly 'org.projectlombok:lombok'
+//    implementation 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
     implementation 'org.apache.commons:commons-lang3:3.0'
