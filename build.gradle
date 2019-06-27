@@ -14,3 +14,15 @@ buildscript {
 subprojects {
     version = '1.0.0'
 }
+
+allprojects {
+    dependencies {
+//        compile 'org.projectlombok:lombok:1.18.4'
+//        annotationProcessor 'org.projectlombok:lombok'
+    }
+}
+
+final String DEFAULT_PROFILE = 'dev'
+if (!project.hasProperty('profile') || !profile) {
+    ext.profile = DEFAULT_PROFILE
+}

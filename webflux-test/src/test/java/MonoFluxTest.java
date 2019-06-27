@@ -84,8 +84,6 @@ public class MonoFluxTest {
                     }})
                     .subscribeOn(Schedulers.parallel())
                     ;
-
-
             return Flux.zip(distinctFruits, countOfFruits, (distinct, count) -> new FruitInfo(distinct, count));
 
         }).subscribe(System.out::println, Throwable::printStackTrace, () -> log.info("basketFlux end"));
