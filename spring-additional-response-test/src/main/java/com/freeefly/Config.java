@@ -3,6 +3,7 @@ package com.freeefly;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -13,14 +14,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableAsync
 @SpringBootApplication
 public class Config implements AsyncConfigurer {
     public static void main(String[] args) {
         SpringApplication.run(Config.class, args);
-//        ConfigurableApplicationContext context = SpringApplication.run(Config.class, args);
-//        NettyWebServer nettyWebServer = context.getBean(NettyWebServer.class);
-//        nettyWebServer.start();
     }
 
     @Override
