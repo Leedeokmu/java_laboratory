@@ -1,4 +1,4 @@
-package com.freeefly.model;
+package com.freeefly.attachment.writer.model;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -12,18 +12,17 @@ import javax.persistence.Table;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Table(name = "board")
+@Table(name = "writer")
 @Entity
-public class Board {
+public class Writer {
     @Id
     @GeneratedValue
     private Long id;
-    private String title;
-    private String content;
+    private String username;
+    private String email;
 
-    public Board(@NonNull String title, @NonNull String content){
-        this.title = title;
-        this.content = content;
+    public Writer(@NonNull String username, @NonNull String email) {
+        this.username = username;
+        this.email = email;
     }
-
 }

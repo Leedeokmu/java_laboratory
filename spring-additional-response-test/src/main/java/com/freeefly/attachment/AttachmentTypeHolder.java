@@ -1,4 +1,4 @@
-package com.freeefly.common.holder;
+package com.freeefly.attachment;
 
 import com.freeefly.enumerate.AttachmentType;
 import lombok.Data;

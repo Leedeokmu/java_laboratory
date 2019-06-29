@@ -1,5 +1,6 @@
 package com.freeefly.dto;
 
+import lombok.Data;
 import lombok.Value;
 import lombok.experimental.Delegate;
 

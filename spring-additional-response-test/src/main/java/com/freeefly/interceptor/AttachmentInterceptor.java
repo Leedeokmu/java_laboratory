@@ -1,7 +1,7 @@
 package com.freeefly.interceptor;
 
 import com.freeefly.aspect.Attach;
-import com.freeefly.common.holder.AttachmentTypeHolder;
+import com.freeefly.attachment.AttachmentTypeHolder;
 import com.freeefly.enumerate.AttachmentType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -40,7 +40,7 @@ public class AttachmentInterceptor extends HandlerInterceptorAdapter {
         Set<AttachmentType> types = resolveAttachmentType(request);
         attachmentTypeHolder.setTypes(types);
 
-        return super.preHandle(request, response, handler);
+        return true;
     }
 
     private Set<AttachmentType> resolveAttachmentType(HttpServletRequest request){

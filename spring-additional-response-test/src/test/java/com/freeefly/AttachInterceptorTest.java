@@ -2,7 +2,7 @@ package com.freeefly;
 
 
 import com.freeefly.aspect.Attach;
-import com.freeefly.common.holder.AttachmentTypeHolder;
+import com.freeefly.attachment.AttachmentTypeHolder;
 import com.freeefly.enumerate.AttachmentType;
 import com.freeefly.interceptor.AttachmentInterceptor;
 import org.junit.Before;
@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;

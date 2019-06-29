@@ -2,6 +2,7 @@ package com.freeefly;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -16,6 +17,7 @@ import java.util.concurrent.ForkJoinPool;
 
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableAsync
+@EnableFeignClients
 @SpringBootApplication
 public class Config implements AsyncConfigurer {
     public static void main(String[] args) {

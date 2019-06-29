@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class AttachmentWrapper {
-    interface  AttachmentMap {
+    interface AttachmentMap {
         void put(AttachmentType type, Attachment attachment);
-        void putAll(Map<? extends Attachment, ? extends Attachment> attachmentMap);
+        void putAll(Map<? extends AttachmentType, ? extends Attachment> attachmentMap);
         boolean isEmpty();
-        Set<Map<AttachmentType, Attachment>> entrySet();
+        Set<Map.Entry<AttachmentType, Attachment>> entrySet();
     }
 
     @Delegate(types = AttachmentMap.class)
