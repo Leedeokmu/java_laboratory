@@ -30,6 +30,7 @@ public class AttachWriterToBoardService implements AttachmentService {
     @Override
     public Attachment getAttachment(Object attachment) {
         BoardDto boardDto = this.supportType.cast(attachment);
+        return writerClient.getWriter(boardDto.getWriterId());
 
     }
 }

@@ -23,9 +23,16 @@ public class BoardCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        // 작성자 샘플 등록
+        List<Writer> writers = IntStream.rangeClosed(1, 100)
+                .mapToObj(n -> new Writer("test user" + n, "test" + n + "@abc.com"))
+                .collect(Collectors.toList());
+        writerRepository.saveAll(writers);
+
         // 게시글 샘플 등록
-        List<Board> boards = IntStream.rangeClosed(1, 100)
-                .mapToObj(n -> new Board("title" + n, "content" + n, (long) n))
+        List<Board> boards = writers
+                .stream()
+                .map(vo -> new Board("title" + vo.getId(), "content" + vo.getId(), vo.getId()))
                 .collect(Collectors.toList());
         boardRepository.saveAll(boards);
 
@@ -40,10 +47,5 @@ public class BoardCommandLineRunner implements CommandLineRunner {
                 .collect(Collectors.toList()));
         commentRepository.saveAll(comments);
 
-        // 작성자 샘플 등록
-        List<Writer> writers = IntStream.rangeClosed(1, 100)
-                .mapToObj(n -> new Writer("test" + n, "test" + n + "@abc.com"))
-                .collect(Collectors.toList());
-        writerRepository.saveAll(writers);
     }
 }
