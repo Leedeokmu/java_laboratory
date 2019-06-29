@@ -29,6 +29,7 @@ public class AttachCommentToBoardService implements AttachmentService {
     @Override
     public Attachment getAttachment(Object attachment) {
         BoardDto boardDto = this.supportType.cast(attachment);
-        return new SimpleAttachmentCollection<>(commentClient.getComments(boardDto.getId()));
+        return new SimpleAttachmentCollection(commentClient.getComments(boardDto.getId()));
     }
 }
+
