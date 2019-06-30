@@ -16,8 +16,9 @@ public interface Attachable {
     default void attach(AttachmentType type, Attachment attachment){
         getAttachmentWrapper().put(type, attachment);
     }
-    default void attach(Collection<AttachmentWrapperItem> items) {
+    default Attachable attach(Collection<AttachmentWrapperItem> items) {
         getAttachmentWrapper().putAll(items);
+        return this;
     }
 
     @JsonAnyGetter

@@ -1,14 +1,11 @@
-package com.freeefly.aspect;
+package com.freeefly.attachment;
 
-import com.freeefly.attachment.AttachmentService;
-import com.freeefly.attachment.AttachmentTypeHolder;
-import com.freeefly.dto.Attachment;
+import com.freeefly.aspect.Attachable;
 import com.freeefly.dto.AttachmentWrapperItem;
 import com.freeefly.enumerate.AttachmentType;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,36 +21,25 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-@Aspect
-public class AttachmentAspect {
-    private final AttachmentTypeHolder attachmentTypeHolder;
+public class AttachExecutor {
     private final Map<AttachmentType, List<AttachmentService<? extends Attachable>>> typeToServiceMap;
 
-
     @Autowired
-    public AttachmentAspect(@NonNull AttachmentTypeHolder attachmentTypeHolder,
-                            @NonNull List<AttachmentService<? extends Attachable>> attachmentServices){
-        this.attachmentTypeHolder = attachmentTypeHolder;
+    public AttachExecutor(@NonNull List<AttachmentService<? extends Attachable>> attachmentServices){
         this.typeToServiceMap = attachmentServices
                 .stream()
                 .collect(Collectors.groupingBy(AttachmentService::getSupportAttachmentType, Collectors.toList()));
     }
 
-    @Pointcut("@annotation(com.freeefly.aspect.Attach)")
-    private void pointcut(){ }
-
-    @AfterReturning(pointcut = "pointcut()", returning = "returnValue")
-    public Object afterReturning(Object returnValue) {
-        if (attachmentTypeHolder.getTypes().isEmpty() && !(returnValue instanceof Attachable)) {
-            return returnValue;
+    public Mono<Attachable> attach(Attachable attachable, AttachmentTypeHolder holder){
+        if (holder.isEmpty()) {
+            return Mono.just(attachable);
         }
 
-        executeAttach((Attachable) returnValue);
-        return returnValue;
+        return executeAttach(attachable, holder.getTypes());
     }
 
-    private void executeAttach(Attachable attachable) {
-        Set<AttachmentType> types = attachmentTypeHolder.getTypes();
+    private Mono<Attachable> executeAttach(Attachable attachable, Set<AttachmentType> types) {
         Class attachmentClass = attachable.getClass();
 
         Mono<List<AttachmentWrapperItem>> items = Flux.fromIterable(types)
@@ -62,12 +48,16 @@ public class AttachmentAspect {
                 .flatMap(type -> Flux.fromIterable(typeToServiceMap.get(type)))
                 .filter(service -> service.getSupportType().isAssignableFrom(attachmentClass))
                 .flatMap(service -> Mono.from(service.getAttachment(attachable)))
+                .map(AttachmentWrapperItem.class::cast)
                 .filter(item -> item != AttachmentWrapperItem.ON_ERROR)
                 .doOnError(e -> log.warn(e.getMessage(), e))
                 .collectList()
                 .onErrorReturn(Collections.emptyList())
                 ;
 
-        items.subscribe((item) -> attachable.attach(item));
+        return items.map(attachable::attach)
+                .doOnError(e -> log.warn(e.getMessage(), e))
+                .onErrorReturn(attachable);
     }
+
 }

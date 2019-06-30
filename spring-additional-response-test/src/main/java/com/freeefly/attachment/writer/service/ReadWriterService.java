@@ -12,6 +12,6 @@ public class ReadWriterService {
 
     public Writer getWriter(Long id){
 //        return writerRepository.findById(id);
-        return writerRepository.findById(id).get();
+        return writerRepository.findById(id);
     }
 }
