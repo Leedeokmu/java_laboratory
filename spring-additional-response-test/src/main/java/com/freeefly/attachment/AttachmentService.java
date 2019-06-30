@@ -3,7 +3,9 @@ package com.freeefly.attachment;
 
 import com.freeefly.aspect.Attachable;
 import com.freeefly.dto.Attachment;
+import com.freeefly.dto.AttachmentWrapperItem;
 import com.freeefly.enumerate.AttachmentType;
+import reactor.core.publisher.Mono;
 
 public interface AttachmentService<T extends Attachable>{
     // 1. 어떤 AttachmentType에 대해서 동작하는가
@@ -14,5 +16,5 @@ public interface AttachmentService<T extends Attachable>{
     Class<T> getSupportType();
 
     // attachment 를 불러와 Attachment 로 변환
-    Attachment getAttachment(Object attachment);
+    Mono<AttachmentWrapperItem> getAttachment(Attachable attachment);
 }

@@ -3,8 +3,10 @@ package com.freeefly.aspect;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.freeefly.dto.Attachment;
 import com.freeefly.dto.AttachmentWrapper;
+import com.freeefly.dto.AttachmentWrapperItem;
 import com.freeefly.enumerate.AttachmentType;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -14,8 +16,8 @@ public interface Attachable {
     default void attach(AttachmentType type, Attachment attachment){
         getAttachmentWrapper().put(type, attachment);
     }
-    default void attach(Map<? extends AttachmentType, ? extends Attachment> attachment) {
-        getAttachmentWrapper().putAll(attachment);
+    default void attach(Collection<AttachmentWrapperItem> items) {
+        getAttachmentWrapper().putAll(items);
     }
 
     @JsonAnyGetter
