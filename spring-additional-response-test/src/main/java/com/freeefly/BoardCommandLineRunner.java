@@ -7,6 +7,8 @@ import com.freeefly.attachment.writer.repository.WriterRepository;
 import com.freeefly.board.model.Board;
 import com.freeefly.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +37,7 @@ public class BoardCommandLineRunner implements CommandLineRunner {
                 .map(vo -> new Board("title" + vo.getId(), "content" + vo.getId(), vo.getId()))
                 .collect(Collectors.toList());
         boardRepository.saveAll(boards);
+
 
         // 게시글-답글 샘플 등록
         List<Comment> comments = boards

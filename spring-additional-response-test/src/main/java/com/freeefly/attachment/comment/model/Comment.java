@@ -18,9 +18,9 @@ public class Comment {
     @Id
     @GeneratedValue
     private Long id;
-    private Long boardId;
     private String email;
     private String body;
+    private Long boardId;
 
     public Comment(@NonNull String email, @NonNull String body, @NonNull Long boardId) {
         this.email = email;
