@@ -1,4 +1,5 @@
 rootProject.name = 'labs'
+include 'reactive-test-project'
 include 'webflux-test'
 include 'spring-additional-response-test'
 
