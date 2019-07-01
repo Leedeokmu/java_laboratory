@@ -1,4 +1,4 @@
-package com.freeefly.reactivetestproject;
+package com.freeefly;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

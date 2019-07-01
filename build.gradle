@@ -15,11 +15,6 @@ subprojects {
     version = '1.0.0'
 }
 
-allprojects {
-    dependencies {
-    }
-}
-
 final String DEFAULT_PROFILE = 'dev'
 if (!project.hasProperty('profile') || !profile) {
     ext.profile = DEFAULT_PROFILE
