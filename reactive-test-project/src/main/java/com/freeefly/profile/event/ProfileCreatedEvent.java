@@ -7,9 +7,9 @@ public class ProfileCreatedEvent extends ApplicationEvent {
     /**
      * Create a new ApplicationEvent.
      *
-     * @param source the object on which the event initially occurred (never {@code null})
+     * @param profile the object on which the event initially occurred (never {@code null})
      */
-    public ProfileCreatedEvent(Profile source) {
-        super(source);
+    public ProfileCreatedEvent(Profile profile) {
+        super(profile);
     }
 }

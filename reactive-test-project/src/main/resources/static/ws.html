@@ -1,0 +1,17 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile notification client</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<script>
+    const socket = new WebSocket('ws://localhost:8000/ws/profiles');
+
+    socket.addEventListener('message', (event) => {
+        window.alert(`profile created: ${event.data}`);
+    })
+</script>
