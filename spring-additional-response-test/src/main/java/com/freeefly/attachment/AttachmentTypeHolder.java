@@ -16,9 +16,7 @@ import java.util.Set;
 public class AttachmentTypeHolder {
     private Set<AttachmentType> types;
 
-    public AttachmentTypeHolder(@NonNull Set<AttachmentType> types) {
-        this.types = Collections.unmodifiableSet(types);
-    }
+    public AttachmentTypeHolder(@NonNull Set<AttachmentType> types) { this.types = Collections.unmodifiableSet(types); }
 
     public boolean isEmpty() {
         return types.isEmpty();
