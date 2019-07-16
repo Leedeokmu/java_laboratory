@@ -1,5 +1,6 @@
 buildscript {
     ext {
+        // r2dbc 는 spring 5.2.M3 이상에서 동작 가능
         springBootVersion = '2.2.0.M3'
     }
     repositories {
