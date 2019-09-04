@@ -50,7 +50,7 @@ public class ImageController {
         return imageService.deleteImage(filename)
                 .then(Mono.just("redirect:/"));
     }
-
+    // test
     @GetMapping("/")
     public Mono<String> index(Model model){
         model.addAttribute("images", imageService.allImages());
